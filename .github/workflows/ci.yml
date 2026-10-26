@@ -1,4 +1,4 @@
-name: Python CI
+﻿name: Python CI
 
 # 1. 觸發條件：當 push 到 main 分支，或有 Pull Request (PR) 針對 main 時觸發
 on:
@@ -31,5 +31,7 @@ jobs:
 
     # 6. 步驟四：自動執行單元測試
     - name: Run tests with pytest
+      env:
+        PYTHONPATH: .
       run: |
         pytest
