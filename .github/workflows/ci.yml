@@ -1,4 +1,4 @@
-﻿name: Python CI
+name: Python CI
 
 # 1. 觸發條件：當 push 到 main 分支，或有 Pull Request (PR) 針對 main 時觸發
 on:
@@ -34,4 +34,6 @@ jobs:
       env:
         PYTHONPATH: .
       run: |
+        pytest
+
         pytest
