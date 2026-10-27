@@ -13,3 +13,6 @@ def divide(a: float, b: float) -> float:
 def multiply(a: float, b: float) -> float:
     """乘法"""
     return a * b
+def subtract(a: float, b: float) -> float:
+    """減法：故意寫錯成加法，模擬 Bug"""
+    return a - b   # ← 故意寫成 +
