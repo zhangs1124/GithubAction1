@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>CI/CD 計算機展示站</title>
+  <style>
+    body { font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #f0f2f5; }
+    .card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 320px; }
+    h2 { margin-top: 0; color: #1a73e8; text-align: center; }
+    .badge { background: #e6f4ea; color: #137333; font-size: 12px; padding: 4px 8px; border-radius: 4px; text-align: center; margin-bottom: 15px; }
+    input, select, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+    button { background: #1a73e8; color: white; border: none; font-weight: bold; cursor: pointer; }
+    button:hover { background: #1557b0; }
+    .result { margin-top: 15px; font-size: 18px; font-weight: bold; text-align: center; color: #202124; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🧮 線上計算機</h2>
+    <div class="badge">🚀 GitHub Actions CD 自動部署成功！</div>
+    <input type="number" id="num1" placeholder="輸入數字 A" value="10">
+    <select id="op">
+      <option value="+">＋ 加法</option>
+      <option value="-">－ 減法</option>
+      <option value="*">× 乘法</option>
+      <option value="/">÷ 除法</option>
+    </select>
+    <input type="number" id="num2" placeholder="輸入數字 B" value="5">
+    <button onclick="calculate()">執行計算</button>
+    <div class="result" id="res">運算結果：15</div>
+  </div>
+
+  <script>
+    function calculate() {
+      const a = parseFloat(document.getElementById('num1').value) || 0;
+      const b = parseFloat(document.getElementById('num2').value) || 0;
+      const op = document.getElementById('op').value;
+      let ans = 0;
+      if (op === '+') ans = a + b;
+      else if (op === '-') ans = a - b;
+      else if (op === '*') ans = a * b;
+      else if (op === '/') ans = b === 0 ? '除數不可為 0' : (a / b);
+      document.getElementById('res').innerText = '運算結果：' + ans;
+    }
+  </script>
+</body>
+</html>
