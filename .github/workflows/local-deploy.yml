@@ -1,0 +1,41 @@
+name: Deploy to Local Machine (Self-Hosted CD)
+
+# 當 main 分支有更新時觸發
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  local-deploy:
+    # 🔥 關鍵核心：告訴 GitHub 不要用微軟雲端，用您的電腦跑！
+    runs-on: self-hosted
+
+    steps:
+      - name: 1. 拉取最新代碼到本機工作區
+        uses: actions/checkout@v4
+
+      - name: 2. 執行本機部署腳本（PowerShell）
+        shell: powershell
+        run: |
+          Write-Host "==========================================" -ForegroundColor Cyan
+          Write-Host "🚀 開始執行本地伺服器 CD 自動部署..." -ForegroundColor Green
+          Write-Host "==========================================" -ForegroundColor Cyan
+          
+          # 指定本地目標部署目錄
+          $targetDir = "D:\local-deployed-app"
+          
+          # 如果目錄不存在就自動建立
+          if (-not (Test-Path $targetDir)) {
+              New-Item -ItemType Directory -Path $targetDir -Force
+              Write-Host "已建立本地發布目錄: $targetDir"
+          }
+          
+          # 把網頁與程式檔案自動複製過去
+          Copy-Item "index.html" -Destination $targetDir -Force
+          Copy-Item "src\*" -Destination "$targetDir\src" -Recurse -Force
+          
+          # 寫入發布日誌
+          $deployTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+          "部署成功時間：$deployTime (Commit: $env:GITHUB_SHA)" | Out-File "$targetDir\deploy_log.txt" -Encoding utf8
+          
+          Write-Host "✅ 部署完成！檔案已同步到 $targetDir" -ForegroundColor Yellow
